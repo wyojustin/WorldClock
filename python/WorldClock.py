@@ -292,11 +292,11 @@ class RunClock(MatrixBase):
         world_clock = WorldClock(0, 0, BLUE, timezones)
         big_clock = BigClock(0, 0, GREEN, ['America/New_York', ' New York'])
         big_clocks = [
-            BigClock(0, 0, BLUE, ['GMT', 'Zulu']),
-            BigClock(0, 0, GREEN, ['Europe/London', 'London']),
-            BigClock(0, 0, BLUE, ['America/New_York', 'New York']),
-            BigClock(0, 0, GREEN, ['America/Denver', 'Denver']),
-            BigClock(0, 0, BLUE, ['America/Los Angeles', 'Los Angeles'])]
+            BigClock(0, 0, GREEN, ['GMT', 'Zulu']),
+            BigClock(0, 0, BLUE, ['Europe/London', 'London']),
+            BigClock(0, 0, GREEN, ['America/New_York', 'New York']),
+            BigClock(0, 0, BLUE, ['America/Denver', 'Denver']),
+            BigClock(0, 0, GREEN, ['America/Los Angeles', 'Los Angeles'])]
         
 
         modes = big_clocks + [world_clock]
