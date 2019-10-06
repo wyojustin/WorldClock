@@ -11,6 +11,7 @@ import arrow
 import digits
 import fonts
 from constants import font_dir
+from constants import RED, GREEN, BLUE
 
 def setPixel(x, y, canvas, color):
     graphics.DrawLine(canvas, x, y, x, y, color)
@@ -125,10 +126,9 @@ def littleChar(x, y, char, canvas, color):
 	      if((pixels[col] >> (row+2)) & 1):
                   setPixel(col + x, row + y - 5, canvas, color)
 
-def little3Code(code, start_x, start_y, canvas, color):
-    littleChar(start_x +  0, start_y, code[0], canvas, color)
-    littleChar(start_x +  6, start_y, code[1], canvas, color)
-    littleChar(start_x + 12, start_y, code[2], canvas, color)
+def littleCode(code, start_x, start_y, canvas, color):
+    for i in range(len(code)):
+        littleChar(start_x +  i * 6, start_y, code[i], canvas, color)
     
 class Sprite:
     def __init__(self, x, y):
@@ -140,15 +140,16 @@ class Sprite:
         dx, dy = dxdy
         self.x += dx
         self.y += dy
-
-class Little3Code(Sprite):
+    def send_command(self, command):
+        pass
+class LittleCode(Sprite):
     def __init__(self, x, y, code, color):
         Sprite.__init__(self, x, y)
         self.code = code
         self.color = color
         
     def draw(self, canvas):
-        little3Code(self.code, self.x, self.y, canvas, self.color)
+        littleCode(self.code, self.x, self.y, canvas, self.color)
         
 class Text(Sprite):
     def __init__(self, x, y, text, color, font):
@@ -178,34 +179,15 @@ class ScrollText(Text):
             
 class LittleClock(Sprite):
     def __init__(self, x, y, color, timezone):
-        text = '00:00:00'
-        self.timezone = timezone
-        Sprite.__init__(self, x, y)
-        self.color = color
-
-    def draw(self, canvas, arrow_tm):
-        #now = time.localtime() + self.local_offset
-        #self.text = "%02d:%02d:%02d" % (now.tm_hour, now.tm_min, now.tm_sec)
-        # self.text = "%02d:%02d:%02d" % (now.tm_hour, now.tm_min, now.tm_sec)
-        tm = arrow_tm.to(self.timezone).timetuple()
-        now = tm.tm_hour * 3600 + tm.tm_min * 60 + tm.tm_sec
-        littleTime(now, self.x, self.y, canvas, self.color)
-        #now = time.localtime(time.time() + self.local_offset)
-        #ss = now.tm_sec
-        #mm = now.tm_min
-        #hh = now.tm_hour
-        #self.text = "%02d:%02d:%02d" % (hh, mm, ss)
-                
-        #Text.draw(self, canvas)
-        
-class LittleClock(Sprite):
-    def __init__(self, x, y, color, timezone):
         Sprite.__init__(self, x, y)
         self.color = color
         self.timezone = timezone
 
     def draw(self, canvas, arrow_tm):
-        tm = arrow_tm.to(self.timezone).timetuple()
+        if self.timezone == 'Local':
+            tm = time.localtime()
+        else:
+            tm = arrow_tm.to(self.timezone).timetuple()
         now = tm.tm_hour * 3600 + tm.tm_min * 60 + tm.tm_sec
         littleTime(now, self.x, self.y, canvas, self.color)
 
@@ -227,25 +209,23 @@ class BigClock(Sprite):
         bigTime(now, self.x, self.y, canvas, self.color, label=self.label, offset_str=offset_str)
     
 class WorldClock(Sprite):
-    def __init__(self, x, y, color, timezones):
-        self.start_x = x
-        self.start_y = y
-        self.color = color
+    def __init__(self, x, y, colors, timezones):
+        self.x = x
+        self.y = y
+        self.colors = colors
         self.timezones = timezones
-        #self.clocks = [
-        #    Clock(x, y + 1 * (7 + 8) - 2, color, timezones[0][0]),
-        #    Clock(x, y + 2 * (7 + 8) - 2, color, timezones[1][0]),
-        #    Clock(x, y + 3 * (7 + 8) - 2, color, timezones[2][0]),
-        #]
-        #self.codes = [
-        #    Little3Code(x + 3, y + 5 + 0 * (7 + 8), timezones[0][1], color),
-        #    Little3Code(x + 3, y + 5 + 1 * (7 + 8), timezones[1][1], color),
-        #    Little3Code(x + 3, y + 5 + 2 * (7 + 8), timezones[2][1], color),
-        #    ]
-        self.clocks = [LittleClock(x, y + (i + 1) * (7 + 8) - 2, color, timezones[i][0])
-                       for i in range(len(timezones))[:4]]
-        self.codes = [Little3Code(x + 3, y + 5 + i * (7 + 8), timezones[i][1], color)
-                      for i in range(len(timezones))[:4]]
+        self.create_sprites()
+
+    def create_sprites(self):
+        self.clocks = [LittleClock(self.x, self.y + (i + 1) * (7 + 8) - 2, self.colors[i % len(self.colors)], self.timezones[i][0])
+                       for i in range(len(self.timezones))[:4]]
+        self.codes = []
+        for i in range(len(self.timezones[:4])):
+            code = self.timezones[i][1][:5]
+            half = len(code) * 3
+            x = 16 - half
+            self.codes.append(LittleCode(x, self.y + 5 + i * (7 + 8), self.timezones[i][1], self.colors[i % len(self.colors)]))
+        
 
     def draw(self, canvas):
         arrow_tm = arrow.get()
@@ -254,22 +234,24 @@ class WorldClock(Sprite):
             clock.draw(canvas, arrow_tm)
         for code in self.codes:
             code.draw(canvas)
-    def scroll_up():
+    def scroll_down(self):
+        self.timezones = [self.timezones[0]] + [self.timezones[-1]] + self.timezones[1:-1]
+        self.create_sprites()
+    def scroll_up(self):
         self.timezones = [self.timezones[0]] + self.timezones[2:] + [self.timezones[1]]
-        self.clocks = [LittleClock(x, y + (i + 1) * (7 + 8) - 2, color, self.timezones[i][0])
-                       for i in range(len(timezones))[:4]]
-        self.codes = [Little3Code(x + 3, y + 5 + i * (7 + 8), self.timezones[i][1], color)
-                      for i in range(len(timezones))[:4]]
-    
+        self.create_sprites()
+
+    def send_command(self, command):
+        for c in command:
+            if c == '+':
+                self.scroll_up()
+            if c == '-':
+                self.scroll_down()
 mode_idx = 0
 tom_thumb = graphics.Font()
 tom_thumb.LoadFont(os.path.join(font_dir, "tom-thumb.bdf"))
 font_5x7 = graphics.Font()
 font_5x7.LoadFont(os.path.join(font_dir, "5x7.bdf"))
-
-RED = graphics.Color(0, 0, 255)
-GREEN = graphics.Color(  0, 255, 0)
-BLUE = graphics.Color(  255, 0, 0)
 
 class RunClock(MatrixBase):
     def __init__(self, *args, **kwargs):
@@ -281,15 +263,18 @@ class RunClock(MatrixBase):
 
         offscreen_canvas = self.matrix.CreateFrameCanvas()
 
-        timezones = [['America/Los_Angeles', 'SFO'],
-                     ['America/Denver', 'WYO'],
-                     ['America/New_York', 'BOS'],
-                     ['Asia/Kolkata', 'MUM'],
-                     ['Asia/Kolkata', 'MUM'],
+        timezones = [['Local', 'LOCAL'],
+                     ['GMT', 'ZULU'],
+                     ['Europe/London', 'LONDN'],
+                     ['America/New_York', 'NY'],
+                     ['America/Chicago', 'CHIGO'],
+                     ['America/Denver', 'DENVR'],
+                     ['America/Los Angeles', 'LA'],
+                     ['Asia/Kolkata', 'MUMAI'],
         ]
         #test_text = Text(21, 13, "AM", BLUE, tom_thumb)
         
-        world_clock = WorldClock(0, 0, BLUE, timezones)
+        world_clock = WorldClock(0, 0, [BLUE, GREEN], timezones)
         big_clock = BigClock(0, 0, GREEN, ['America/New_York', ' New York'])
         big_clocks = [
             BigClock(0, 0, GREEN, ['GMT', 'Zulu']),
@@ -299,7 +284,7 @@ class RunClock(MatrixBase):
             BigClock(0, 0, GREEN, ['America/Los Angeles', 'Los Angeles'])]
         
 
-        modes = big_clocks + [world_clock]
+        modes =  [world_clock] + big_clocks
         def read_command():
             result = select.select([sys.stdin,],[],[],0.0)[0]
             if result:
@@ -310,6 +295,9 @@ class RunClock(MatrixBase):
         def next_display():
             global mode_idx
             mode_idx = (mode_idx+1) % (len(modes))
+        def prev_display():
+            global mode_idx
+            mode_idx = (mode_idx + len(modes) - 1) % (len(modes))
         while True:
             offscreen_canvas.Clear()
             modes[mode_idx].draw(offscreen_canvas)
@@ -322,8 +310,13 @@ class RunClock(MatrixBase):
                 command = command.upper()
                 if command == 'N':
                     next_display()
+                if command == 'P':
+                    prev_display()
                 if command == 'Q':
                     break
+                else:
+                    ## send command to active display
+                    modes[mode_idx].send_command(command)
             time.sleep(0.05)
 # Main function
 if __name__ == "__main__":
