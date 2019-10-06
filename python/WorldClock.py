@@ -3,7 +3,7 @@
 import os.path
 import sys
 import select
-from samplebase import SampleBase
+from matrixbase import MatrixBase
 from rgbmatrix import graphics
 import time
 import arrow
@@ -69,7 +69,7 @@ def littleTime(current_time, start_x, start_y, canvas, color, am_pm=True):
   littleDigit(start_x + 2 * 5 + 1,  start_y, mm/10, canvas, color);
   littleDigit(start_x + 3 * 5 + 1,  start_y, mm%10, canvas, color);
 
-def bigTime(current_time, start_x, start_y, canvas, color, am_pm=True, label=None):
+def bigTime(current_time, start_x, start_y, canvas, color, am_pm=True, label=None, offset_str=None):
   hh, mm, ss = unix2hms(current_time)
   colen = (ss % 2) == 0
   W = 10
@@ -108,7 +108,13 @@ def bigTime(current_time, start_x, start_y, canvas, color, am_pm=True, label=Non
   bigDigit(start_x + W,  start_y + 2 * H, ss%10, canvas, color);
   if label:
       for i in range(len(label)):
-          littleChar(start_x + 20, start_y + 5 + 6 * i, label[i], canvas, color)
+          graphics.DrawText(canvas, font_5x7, start_x + 20, start_y + 7 + 7 * i, color, label[i].upper())
+          #littleChar(start_x + 20, start_y + 5 + 6 * i, label[i], canvas, color)
+  if offset_str:
+      for i in range(len(offset_str)):
+          offset_str = offset_str.replace('-', '|')
+          graphics.DrawText(canvas, font_5x7, start_x + 26, start_y + 7 + 7 * i, color, offset_str[i].upper())
+      
              
 def littleChar(x, y, char, canvas, color):
   idx = ord(char) - 32;
@@ -211,10 +217,14 @@ class BigClock(Sprite):
         self.label = self.timezone[1]
 
     def draw(self, canvas):
-        arrow_tm = arrow.get()
-        tm = arrow_tm.to(self.timezone[0]).timetuple()
+        arrow_tm = arrow.get().to(self.timezone[0])
+        tm = arrow_tm.timetuple()
+        utcoffset = arrow_tm.utcoffset().total_seconds()
+        offset_hh = int(utcoffset / 3600)
+        offset_mm = int((utcoffset % 3600) / 60)
+        offset_str = "GMT %+02d%02d" % (offset_hh, offset_mm)
         now = tm.tm_hour * 3600 + tm.tm_min * 60 + tm.tm_sec
-        bigTime(now, self.x, self.y, canvas, self.color, label=self.label)
+        bigTime(now, self.x, self.y, canvas, self.color, label=self.label, offset_str=offset_str)
     
 class WorldClock(Sprite):
     def __init__(self, x, y, color, timezones):
@@ -252,29 +262,44 @@ class WorldClock(Sprite):
                       for i in range(len(timezones))[:4]]
     
 mode_idx = 0
-class RunText(SampleBase):
+tom_thumb = graphics.Font()
+tom_thumb.LoadFont(os.path.join(font_dir, "tom-thumb.bdf"))
+font_5x7 = graphics.Font()
+font_5x7.LoadFont(os.path.join(font_dir, "5x7.bdf"))
+
+RED = graphics.Color(0, 0, 255)
+GREEN = graphics.Color(  0, 255, 0)
+BLUE = graphics.Color(  255, 0, 0)
+
+class RunClock(MatrixBase):
     def __init__(self, *args, **kwargs):
-        super(RunText, self).__init__(*args, **kwargs)
+        super(RunClock, self).__init__(*args, **kwargs)
         self.parser.add_argument("-t", "--text", help="The text to scroll on the RGB LED panel", default="Hello world!")
 
     def run(self):
-        offscreen_canvas = self.matrix.CreateFrameCanvas()
-        font = graphics.Font()
-        font.LoadFont(os.path.join(font_dir, "7x14B.bdf"))
+        print("Press N for next, Q to quit")
 
-        red = graphics.Color(0, 0, 255)
-        green = graphics.Color(  0, 255, 0)
-        blue = graphics.Color(  255, 0, 0)
+        offscreen_canvas = self.matrix.CreateFrameCanvas()
+
         timezones = [['America/Los_Angeles', 'SFO'],
                      ['America/Denver', 'WYO'],
                      ['America/New_York', 'BOS'],
                      ['Asia/Kolkata', 'MUM'],
                      ['Asia/Kolkata', 'MUM'],
         ]
-        world_clock = WorldClock(0, 0, blue, timezones)
-        big_clock = BigClock(0, 0, green, ['America/New_York', ' New York'])
-        big_clock = BigClock(0, 0, green, ['America/New_York', 'Reston VA'])
-        modes = [world_clock, big_clock]
+        #test_text = Text(21, 13, "AM", BLUE, tom_thumb)
+        
+        world_clock = WorldClock(0, 0, BLUE, timezones)
+        big_clock = BigClock(0, 0, GREEN, ['America/New_York', ' New York'])
+        big_clocks = [
+            BigClock(0, 0, BLUE, ['GMT', 'Zulu']),
+            BigClock(0, 0, GREEN, ['Europe/London', 'London']),
+            BigClock(0, 0, BLUE, ['America/New_York', 'New York']),
+            BigClock(0, 0, GREEN, ['America/Denver', 'Denver']),
+            BigClock(0, 0, BLUE, ['America/Los Angeles', 'Los Angeles'])]
+        
+
+        modes = big_clocks + [world_clock]
         def read_command():
             result = select.select([sys.stdin,],[],[],0.0)[0]
             if result:
@@ -288,14 +313,20 @@ class RunText(SampleBase):
         while True:
             offscreen_canvas.Clear()
             modes[mode_idx].draw(offscreen_canvas)
-            #middleDigit(10, 30, 7, offscreen_canvas, blue)
+            #middleDigit(10, 30, 7, offscreen_canvas, BLUE)
+            #test_text.draw(offscreen_canvas)
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
+            
             command = read_command()
-            if command and command.upper() == 'N':
-                next_display()
+            if command:
+                command = command.upper()
+                if command == 'N':
+                    next_display()
+                if command == 'Q':
+                    break
             time.sleep(0.05)
 # Main function
 if __name__ == "__main__":
-    run_text = RunText()
-    if (not run_text.process()):
+    run_clock = RunClock()
+    if (not run_clock.process()):
         run_text.print_help()

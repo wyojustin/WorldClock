@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/..'))
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 
 
-class SampleBase(object):
+class MatrixBase(object):
     def __init__(self, *args, **kwargs):
         self.parser = argparse.ArgumentParser()
 
@@ -64,7 +64,6 @@ class SampleBase(object):
 
         try:
             # Start loop
-            print("Press CTRL-C to stop sample")
             self.run()
         except KeyboardInterrupt:
             print("Exiting\n")
