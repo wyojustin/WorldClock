@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # Display a runtext with double-buffering.
+import os.path
 import sys
 import select
 from samplebase import SampleBase
@@ -9,6 +10,7 @@ import arrow
 
 import digits
 import fonts
+from constants import font_dir
 
 def setPixel(x, y, canvas, color):
     graphics.DrawLine(canvas, x, y, x, y, color)
@@ -258,9 +260,8 @@ class RunText(SampleBase):
     def run(self):
         offscreen_canvas = self.matrix.CreateFrameCanvas()
         font = graphics.Font()
-        #font.LoadFont("../../../fonts/7x13.bdf")
-        font.LoadFont("../../../fonts/7x14B.bdf")
-        #font.LoadFont("../../../fonts/10x20.bdf")
+        font.LoadFont(os.path.join(font_dir, "7x14B.bdf"))
+
         red = graphics.Color(0, 0, 255)
         green = graphics.Color(  0, 255, 0)
         blue = graphics.Color(  255, 0, 0)
