@@ -11,7 +11,7 @@ import arrow
 import digits
 import fonts
 from constants import font_dir
-from constants import RED, GREEN, BLUE
+from constants import RED, GREEN, BLUE, PURPLE
 
 def setPixel(x, y, canvas, color):
     graphics.DrawLine(canvas, x, y, x, y, color)
@@ -53,8 +53,8 @@ def littleTime(current_time, start_x, start_y, canvas, color, am_pm=True):
       am_pm = int(hh > 12)
       littleDigit(start_x + 4 * 5,  start_y, 10 + am_pm, canvas, color) ## A or P
       # littleDigit(start_x + 5 * 5 - 1,  start_y, 12, canvas, color) # M
-      if(hh != 12):
-           hh = hh % 12
+      hh = (hh - 1) % 12 + 1
+
   else:
       hh %= 24
 
@@ -80,8 +80,8 @@ def bigTime(current_time, start_x, start_y, canvas, color, am_pm=True, label=Non
       am_pm = int(hh > 12)
       # littleDigit(start_x + 4 * 5,  start_y, 10 + am_pm, canvas, color) ## A or P
       # littleDigit(start_x + 5 * 5 - 1,  start_y, 12, canvas, color) # M
-      if(hh != 12):
-           hh = hh % 12
+      hh = (hh - 1) % 12 + 1
+
   else:
       hh %= 24
 
@@ -214,18 +214,22 @@ class WorldClock(Sprite):
         self.y = y
         self.colors = colors
         self.timezones = timezones
+        self.color_offset = 0
         self.create_sprites()
-
+        
     def create_sprites(self):
-        self.clocks = [LittleClock(self.x, self.y + (i + 1) * (7 + 8) - 2, self.colors[i % len(self.colors)], self.timezones[i][0])
-                       for i in range(len(self.timezones))[:4]]
         self.codes = []
+        self.clocks = []
         for i in range(len(self.timezones[:4])):
+            if i == 0:
+                color = PURPLE
+            else:
+                color = self.colors[(i + self.color_offset) % len(self.colors)]
             code = self.timezones[i][1][:5]
             half = len(code) * 3
             x = 16 - half
-            self.codes.append(LittleCode(x, self.y + 5 + i * (7 + 8), self.timezones[i][1], self.colors[i % len(self.colors)]))
-        
+            self.codes.append(LittleCode(x, self.y + 5 + i * (7 + 8), self.timezones[i][1], color))
+            self.clocks.append(LittleClock(self.x, self.y + (i + 1) * (7 + 8) - 2, color, self.timezones[i][0]))
 
     def draw(self, canvas):
         arrow_tm = arrow.get()
@@ -236,9 +240,11 @@ class WorldClock(Sprite):
             code.draw(canvas)
     def scroll_down(self):
         self.timezones = [self.timezones[0]] + [self.timezones[-1]] + self.timezones[1:-1]
+        self.color_offset -= 1
         self.create_sprites()
     def scroll_up(self):
         self.timezones = [self.timezones[0]] + self.timezones[2:] + [self.timezones[1]]
+        self.color_offset += 1
         self.create_sprites()
 
     def send_command(self, command):
@@ -263,18 +269,29 @@ class RunClock(MatrixBase):
 
         offscreen_canvas = self.matrix.CreateFrameCanvas()
 
+        wyozones = [
+            ['Local', 'Bostn'],
+#            ['America/New York', 'Bostn'],
+            ['America/Los Angeles', 'SAN'],
+            ['Asia/Shanghai', 'SHNZN'],
+            ['Asia/Kolkata', 'MUMBI'],
+        ]
         timezones = [['Local', 'LOCAL'],
-                     ['GMT', 'ZULU'],
+                     # ['GMT', 'ZULU'],
                      ['Europe/London', 'LONDN'],
                      ['America/New_York', 'NY'],
                      ['America/Chicago', 'CHIGO'],
                      ['America/Denver', 'DENVR'],
                      ['America/Los Angeles', 'LA'],
-                     ['Asia/Kolkata', 'MUMAI'],
+                     ['Asia/Shanghai', 'SHNZN'],
+                     ['Asia/Kolkata', 'MUMBI'],
         ]
         #test_text = Text(21, 13, "AM", BLUE, tom_thumb)
         
-        world_clock = WorldClock(0, 0, [BLUE, GREEN], timezones)
+        world_clocks = [
+            WorldClock(0, 0, [BLUE, GREEN], timezones),
+            WorldClock(0, 0, [BLUE, GREEN, RED], wyozones),
+            ]
         big_clock = BigClock(0, 0, GREEN, ['America/New_York', ' New York'])
         big_clocks = [
             BigClock(0, 0, GREEN, ['GMT', 'Zulu']),
@@ -284,7 +301,7 @@ class RunClock(MatrixBase):
             BigClock(0, 0, GREEN, ['America/Los Angeles', 'Los Angeles'])]
         
 
-        modes =  [world_clock] + big_clocks
+        modes =  world_clocks + big_clocks
         def read_command():
             result = select.select([sys.stdin,],[],[],0.0)[0]
             if result:

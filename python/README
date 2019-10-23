@@ -1,0 +1,14 @@
+Delendencies:
+rgbmatrix
+arrow.py
+### edit parser.py
+try:
+    from functools import lru_cache
+except ImportError:  # pragma: no cover
+    def lru_cache(*args, **kw):
+        pass
+    # from backports.functools_lru_cache import lru_cache  # pragma: no cover
+
+###
+# pathlib (required by websockets)
+# websockets (says py3 required! FAILED)
