@@ -10,5 +10,3 @@ except ImportError:  # pragma: no cover
     # from backports.functools_lru_cache import lru_cache  # pragma: no cover
 
 ###
-# pathlib (required by websockets)
-# websockets (says py3 required! FAILED)
