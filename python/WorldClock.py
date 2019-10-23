@@ -20,7 +20,7 @@ def bigDigit(x, y, digit, canvas, color):
   if(0 <= digit and digit < 10):
       for col in range(8):
           for row in range(16):
-	      if((digits.digits8x16[digit, row] >> col) & 1):
+	      if((digits.digits8x16[digit][row] >> col) & 1):
                   setPixel(col + x, row + y, canvas, color)
 
 def middleDigit(x, y, digit, canvas, color):
@@ -29,13 +29,13 @@ def middleDigit(x, y, digit, canvas, color):
           for row in range(11):
 	      _row = 11 - row - 1
 	      _col = 7 - col - 1
-	      if((digits.digits7x11[digit, _row] >> _col) & 1):
+	      if((digits.digits7x11[digit][_row] >> _col) & 1):
                   setPixel(col + x, row + y, canvas, color)
 def littleDigit(x, y, digit, canvas, color):
     if(digit < 13):
         for col in range(4):
             for row in range(7):
-	        if((digits.digits4x7[digit, col] >> row) & 1):
+	        if((digits.digits4x7[digit][col] >> row) & 1):
                     setPixel(col + x, row + y, canvas, color)
 
 def unix2hms(unix):
