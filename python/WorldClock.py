@@ -70,7 +70,9 @@ def littleTime(current_time, start_x, start_y, canvas, color, am_pm=True):
   littleDigit(start_x + 2 * 5 + 1,  start_y, mm/10, canvas, color);
   littleDigit(start_x + 3 * 5 + 1,  start_y, mm%10, canvas, color);
 
-def bigTime(current_time, start_x, start_y, canvas, color, am_pm=True, label=None, offset_str=None):
+def bigTime(current_time, start_x, start_y, canvas, color, am_pm=True, label=None, offset_str=None, color2=None):
+  if color2 is None:
+      color2 = color
   hh, mm, ss = unix2hms(current_time)
   colen = (ss % 2) == 0
   W = 10
@@ -109,12 +111,11 @@ def bigTime(current_time, start_x, start_y, canvas, color, am_pm=True, label=Non
   bigDigit(start_x + W,  start_y + 2 * H, ss%10, canvas, color);
   if label:
       for i in range(len(label)):
-          graphics.DrawText(canvas, font_5x7, start_x + 20, start_y + 7 + 7 * i, color, label[i].upper())
+          graphics.DrawText(canvas, font_5x7, start_x + 20, start_y + 7 + 7 * i, color2, label[i].upper())
           #littleChar(start_x + 20, start_y + 5 + 6 * i, label[i], canvas, color)
   if offset_str:
       for i in range(len(offset_str)):
-          offset_str = offset_str.replace('-', '|')
-          graphics.DrawText(canvas, font_5x7, start_x + 26, start_y + 7 + 7 * i, color, offset_str[i].upper())
+          graphics.DrawText(canvas, font_5x7, start_x + 26, start_y + 7 + 7 * i, color2, offset_str[i].upper())
       
              
 def littleChar(x, y, char, canvas, color):
@@ -192,9 +193,12 @@ class LittleClock(Sprite):
         littleTime(now, self.x, self.y, canvas, self.color)
 
 class BigClock(Sprite):
-    def __init__(self, x, y, color, timezone):
+    def __init__(self, x, y, color, timezone, color2=None):
+        if color2 is None:
+            color2 = color
         Sprite.__init__(self, x, y)
         self.color = color
+        self.color2 = color2
         self.timezone = timezone
         self.label = self.timezone[1]
 
@@ -206,7 +210,7 @@ class BigClock(Sprite):
         offset_mm = int((utcoffset % 3600) / 60)
         offset_str = "GMT %+02d%02d" % (offset_hh, offset_mm)
         now = tm.tm_hour * 3600 + tm.tm_min * 60 + tm.tm_sec
-        bigTime(now, self.x, self.y, canvas, self.color, label=self.label, offset_str=offset_str)
+        bigTime(now, self.x, self.y, canvas, self.color, label=self.label, offset_str=offset_str, color2=self.color2)
     
 class WorldClock(Sprite):
     def __init__(self, x, y, colors, timezones):
@@ -259,6 +263,26 @@ tom_thumb.LoadFont(os.path.join(font_dir, "tom-thumb.bdf"))
 font_5x7 = graphics.Font()
 font_5x7.LoadFont(os.path.join(font_dir, "5x7.bdf"))
 
+BRIGHTNESS = [2,   3,   5,   6,   9,  12,  15,  21,  27,
+              36,  48,  63,  84, 111, 146, 193, 255]
+
+def brighter(b):
+    idx = 0
+    while idx < len(BRIGHTNESS) - 1 and BRIGHTNESS[idx] < b:
+        idx += 1
+    idx += 1
+    out = BRIGHTNESS[idx]
+    return out
+
+def dimmer(b):
+    idx = len(BRIGHTNESS) - 1
+    while 1 < idx and BRIGHTNESS[idx] > b:
+        idx -= 1
+    idx -= 1
+    out = BRIGHTNESS[idx]
+    return out
+
+quit = [False] ### lists are mutable, use instead of global quit
 class RunClock(MatrixBase):
     def __init__(self, *args, **kwargs):
         super(RunClock, self).__init__(*args, **kwargs)
@@ -292,13 +316,13 @@ class RunClock(MatrixBase):
             WorldClock(0, 0, [BLUE, GREEN], timezones),
             WorldClock(0, 0, [BLUE, GREEN, RED], wyozones),
             ]
-        big_clock = BigClock(0, 0, GREEN, ['America/New_York', ' New York'])
+        big_clock = BigClock(0, 0, GREEN, ['America/New_York', ' New York'], color2=BLUE)
         big_clocks = [
-            BigClock(0, 0, GREEN, ['GMT', 'Zulu']),
-            BigClock(0, 0, BLUE, ['Europe/London', 'London']),
-            BigClock(0, 0, GREEN, ['America/New_York', 'New York']),
-            BigClock(0, 0, BLUE, ['America/Denver', 'Denver']),
-            BigClock(0, 0, GREEN, ['America/Los Angeles', 'Los Angeles'])]
+            BigClock(0, 0, GREEN, ['GMT', 'Zulu'], color2=BLUE),
+            BigClock(0, 0, BLUE, ['Europe/London', 'London'], color2=GREEN),
+            BigClock(0, 0, GREEN, ['America/New_York', 'New York'], color2=BLUE),
+            BigClock(0, 0, BLUE, ['America/Denver', 'Denver'], color2=GREEN),
+            BigClock(0, 0, GREEN, ['America/Los Angeles', 'Los Angeles'], color2=BLUE)]
         
 
         modes =  world_clocks + big_clocks
@@ -315,7 +339,7 @@ class RunClock(MatrixBase):
         def prev_display():
             global mode_idx
             mode_idx = (mode_idx + len(modes) - 1) % (len(modes))
-        while True:
+        while not quit[0]:
             offscreen_canvas.Clear()
             modes[mode_idx].draw(offscreen_canvas)
             #middleDigit(10, 30, 7, offscreen_canvas, BLUE)
@@ -324,17 +348,24 @@ class RunClock(MatrixBase):
             
             command = read_command()
             if command:
-                command = command.upper()
-                if command == 'N':
-                    next_display()
-                if command == 'P':
-                    prev_display()
-                if command == 'Q':
-                    break
-                else:
-                    ## send command to active display
-                    modes[mode_idx].send_command(command)
-            time.sleep(0.05)
+                for c in command.upper():
+                    command = c
+                    if command == 'N':
+                        next_display()
+                    elif command == 'P':
+                        prev_display()
+                    elif command == 'B' and self.matrix.brightness < 255:
+                        self.matrix.brightness = brighter(self.matrix.brightness)
+                    elif command == 'D' and self.matrix.brightness > 0:
+                        self.matrix.brightness = dimmer(self.matrix.brightness)
+                    elif command == 'Q':
+                        quit[0] = True
+                        break
+                    else:
+                        ## send command to active display
+                        modes[mode_idx].send_command(command)
+                    last_command = command
+                time.sleep(0.05)
 # Main function
 if __name__ == "__main__":
     run_clock = RunClock()
