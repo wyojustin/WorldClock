@@ -13,6 +13,8 @@ import fonts
 from constants import font_dir
 from constants import RED, GREEN, BLUE, PURPLE
 
+from I2CNavKey import nav
+
 def setPixel(x, y, canvas, color):
     graphics.DrawLine(canvas, x, y, x, y, color)
     
@@ -253,9 +255,9 @@ class WorldClock(Sprite):
 
     def send_command(self, command):
         for c in command:
-            if c == '+':
+            if c == 'R':
                 self.scroll_up()
-            if c == '-':
+            if c == 'L':
                 self.scroll_down()
 mode_idx = 0
 tom_thumb = graphics.Font()
@@ -287,7 +289,16 @@ class RunClock(MatrixBase):
     def __init__(self, *args, **kwargs):
         super(RunClock, self).__init__(*args, **kwargs)
         self.parser.add_argument("-t", "--text", help="The text to scroll on the RGB LED panel", default="Hello world!")
+        self.command_buffer = []
+        nav.bindkey('<Up release>', lambda: self.add_cmd('U'))
+        nav.bindkey('<Down release>', lambda: self.add_cmd('D'))
+        nav.bindkey('<Central release>', lambda: self.add_cmd('C'))
+        nav.bindkey('<Left release>', lambda: self.add_cmd('L'))
+        nav.bindkey('<Right release>', lambda: self.add_cmd('R'))
 
+    def add_cmd(self, cmd):
+        self.command_buffer.append(cmd)
+        
     def run(self):
         print("Press N for next, Q to quit")
 
@@ -296,7 +307,7 @@ class RunClock(MatrixBase):
         wyozones = [
             ['Local', 'Bostn'],
 #            ['America/New York', 'Bostn'],
-            ['America/Los Angeles', 'SAN'],
+            ['America/Los Angeles', 'Diego'],
             ['Asia/Shanghai', 'SHNZN'],
             ['Asia/Kolkata', 'MUMBI'],
         ]
@@ -311,10 +322,22 @@ class RunClock(MatrixBase):
                      ['Asia/Kolkata', 'MUMBI'],
         ]
         #test_text = Text(21, 13, "AM", BLUE, tom_thumb)
-        
+        all_zones = [('Local', 'LOCAL')]
+        all_colors = [PURPLE]
+        tz_txt = 'zonemap.txt'
+        lines = open(tz_txt).readlines()
+        for i, line in enumerate(lines[1:]):
+            line = line.split()
+            if line:
+                code = line[0]
+                city = line[1]
+                color = [GREEN, BLUE][i % 2]
+                all_zones.insert(1, (code, city))
+                all_colors.insert(1, color)
         world_clocks = [
             WorldClock(0, 0, [BLUE, GREEN], timezones),
             WorldClock(0, 0, [BLUE, GREEN, RED], wyozones),
+            WorldClock(0, 0, all_colors, all_zones)
             ]
         big_clock = BigClock(0, 0, GREEN, ['America/New_York', ' New York'], color2=BLUE)
         big_clocks = [
@@ -323,7 +346,6 @@ class RunClock(MatrixBase):
             BigClock(0, 0, GREEN, ['America/New_York', 'New York'], color2=BLUE),
             BigClock(0, 0, BLUE, ['America/Denver', 'Denver'], color2=GREEN),
             BigClock(0, 0, GREEN, ['America/Los Angeles', 'Los Angeles'], color2=BLUE)]
-        
 
         modes =  world_clocks + big_clocks
         def read_command():
@@ -331,7 +353,11 @@ class RunClock(MatrixBase):
             if result:
                 out = sys.stdin.readline().strip()
             else:
-                out = None
+                out = ''
+            nav.react()
+            if self.command_buffer:
+                out = out + ''.join(self.command_buffer)
+                self.command_buffer = []
             return out
         def next_display():
             global mode_idx
@@ -350,11 +376,11 @@ class RunClock(MatrixBase):
             if command:
                 for c in command.upper():
                     command = c
-                    if command == 'N':
+                    if command == 'C':
                         next_display()
                     elif command == 'P':
                         prev_display()
-                    elif command == 'B' and self.matrix.brightness < 255:
+                    elif command == 'U' and self.matrix.brightness < 255:
                         self.matrix.brightness = brighter(self.matrix.brightness)
                     elif command == 'D' and self.matrix.brightness > 0:
                         self.matrix.brightness = dimmer(self.matrix.brightness)
