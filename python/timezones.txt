@@ -120,81 +120,80 @@
                       America/Kralendijk                Krale
                       America/Louisville                Lsvle
                       America/Martinique                Marti
-                      America/Montserrat           Montserrat
-                      America/St_Vincent           St_Vincent
-                     America/Pangnirtung          Pangnirtung
-                     America/Porto_Velho          Porto_Velho
-                     America/Puerto_Rico          Puerto_Rico
-                     America/Thunder_Bay          Thunder_Bay
-                    America/Blanc-Sablon         Blanc-Sablon
-                    America/Campo_Grande         Campo_Grande
-                    America/Indianapolis         Indianapolis
-                   America/Indiana/Vevay              Indiana
-                   America/Lower_Princes        Lower_Princes
-                   America/Port_of_Spain        Port_of_Spain
-                   America/Santo_Domingo        Santo_Domingo
-                   America/St_Barthelemy        St_Barthelemy
-                  America/Port-au-Prince       Port-au-Prince
-                 America/Indiana/Marengo              Indiana
-                 America/Indiana/Winamac              Indiana
-               America/Indiana/Vincennes              Indiana
-              America/Indiana/Petersburg              Indiana
-             America/Kentucky/Louisville             Kentucky
-             America/Kentucky/Monticello             Kentucky
-            America/Indiana/Indianapolis              Indiana
+                      America/Montserrat                Monts
+                      America/St_Vincent                StVnt
+                     America/Pangnirtung                Pangn
+                     America/Porto_Velho                PVlho
+                     America/Puerto_Rico                 Rico
+                     America/Thunder_Bay                ThBay
+                    America/Blanc-Sablon                Blanc
+                    America/Campo_Grande                Campo
+                    America/Indianapolis                 Indi
+                   America/Indiana/Vevay                Vevay
+                   America/Port_of_Spain                Spain
+                   America/Santo_Domingo                Santo
+                   America/St_Barthelemy                StBar
+                  America/Port-au-Prince                P-a-P
+                 America/Indiana/Marengo                Mrngo
+                 America/Indiana/Winamac                Wnmac
+               America/Indiana/Vincennes                Vncen
+              America/Indiana/Petersburg                PTRBG
+             America/Kentucky/Louisville                Lvlle
+             America/Kentucky/Monticello                Monti
+            America/Indiana/Indianapolis                 Indi
                                Etc/GMT+3                GMT+3
                            America/Bahia                Bahia
                            America/Belem                Belem
                            America/Jujuy                Jujuy
                            America/Thule                Thule
-                          America/Maceio               Maceio
-                          America/Recife               Recife
-                         America/Cayenne              Cayenne
-                         America/Cordoba              Cordoba
-                         America/Godthab              Godthab
-                         America/Halifax              Halifax
-                         America/Mendoza              Mendoza
-                         America/Moncton              Moncton
-                         America/Rosario              Rosario
-                        America/Asuncion             Asuncion
-                        America/Santarem             Santarem
-                        America/Santiago             Santiago
-                        Atlantic/Bermuda              Bermuda
-                        Atlantic/Stanley              Stanley
-                       America/Araguaina            Araguaina
-                       America/Catamarca            Catamarca
-                       America/Fortaleza            Fortaleza
-                       America/Glace_Bay            Glace_Bay
-                       America/Goose_Bay            Goose_Bay
-                       America/Sao_Paulo            Sao_Paulo
-                       Antarctica/Palmer               Palmer
-                      America/Montevideo           Montevideo
-                      America/Paramaribo           Paramaribo
-                      Antarctica/Rothera              Rothera
-                    America/Buenos_Aires         Buenos_Aires
-                    America/Punta_Arenas         Punta_Arenas
-                 America/Argentina/Jujuy            Argentina
-                 America/Argentina/Salta            Argentina
-               America/Argentina/Cordoba            Argentina
-               America/Argentina/Mendoza            Argentina
-               America/Argentina/Tucuman            Argentina
-               America/Argentina/Ushuaia            Argentina
-              America/Argentina/La_Rioja            Argentina
-              America/Argentina/San_Juan            Argentina
-              America/Argentina/San_Luis            Argentina
-             America/Argentina/Catamarca            Argentina
-          America/Argentina/Buenos_Aires            Argentina
-        America/Argentina/ComodRivadavia            Argentina
-          America/Argentina/Rio_Gallegos            Argentina
+                          America/Maceio                Mceio
+                          America/Recife                Rcife
+                         America/Cayenne                Cyene
+                         America/Cordoba                Crdba
+                         America/Godthab                Gdthb
+                         America/Halifax                Hlfax
+                         America/Mendoza                Mndza
+                         America/Moncton                Mnton
+                         America/Rosario                Rosar
+                        America/Asuncion                Asunc
+                        America/Santarem                Sntrm
+                        America/Santiago                tiago
+                        Atlantic/Bermuda                Bmuda
+                        Atlantic/Stanley                Stnly
+                       America/Araguaina                Aragu
+                       America/Catamarca                Catam
+                       America/Fortaleza                Forta
+                       America/Glace_Bay                Glace
+                       America/Goose_Bay                Goose
+                       America/Sao_Paulo                SaoPa
+                       Antarctica/Palmer                Plmer
+                      America/Montevideo                Monte
+                      America/Paramaribo                Param
+                      Antarctica/Rothera                Rthra
+                    America/Buenos_Aires                Aires
+                    America/Punta_Arenas                Arnas
+                 America/Argentina/Jujuy                Jujay
+                 America/Argentina/Salta                Salta
+               America/Argentina/Cordoba                Cordo
+               America/Argentina/Mendoza                Mendo
+               America/Argentina/Tucuman                Tucmn
+               America/Argentina/Ushuaia                Ushaa
+              America/Argentina/La_Rioja                LaRja
+              America/Argentina/San_Juan                SJuan
+              America/Argentina/San_Luis                SLuis
+             America/Argentina/Catamarca                Catam
+          America/Argentina/Buenos_Aires                Aires
+        America/Argentina/ComodRivadavia                Rivad
+          America/Argentina/Rio_Gallegos                RioGa            
                                Etc/GMT+2                GMT+2
-                         America/Noronha              Noronha
-                        America/Miquelon             Miquelon
-                  Atlantic/South_Georgia        South_Georgia
-                        America/St_Johns             St_Johns
+                         America/Noronha                Nrnha
+                        America/Miquelon                Mqlon
+                  Atlantic/South_Georgia                SGrga
+                        America/St_Johns               StJhns
                                Etc/GMT+1                GMT+1
-                         Atlantic/Azores               Azores
-                     Atlantic/Cape_Verde           Cape_Verde
-                    America/Scoresbysund         Scoresbysund
+                         Atlantic/Azores                Azres
+                     Atlantic/Cape_Verde                Verde
+                    America/Scoresbysund                Scres
                                  GMT/GMT                  GMT
                                  UTC/UTC                  UTC
                                  Etc/GMT                  GMT
@@ -205,32 +204,32 @@
                              Africa/Lome                 Lome
                             Africa/Accra                Accra
                             Africa/Dakar                Dakar
-                           Africa/Bamako               Bamako
-                           Africa/Banjul               Banjul
-                           Africa/Bissau               Bissau
-                           Europe/Dublin               Dublin
-                           Europe/Jersey               Jersey
-                           Europe/Lisbon               Lisbon
-                           Europe/London               London
-                          Africa/Abidjan              Abidjan
-                          Africa/Conakry              Conakry
+                           Africa/Bamako                Bmako
+                           Africa/Banjul                Bnjul
+                           Africa/Bissau                Bssau
+                           Europe/Dublin                Dblin
+                           Europe/Jersey                Jrsey
+                           Europe/Lisbon                Lsbon
+                           Europe/London                Londn
+                          Africa/Abidjan                Abdjn
+                          Africa/Conakry                Cnkry
                           Atlantic/Faroe                Faroe
-                          Europe/Belfast              Belfast
-                         Africa/Freetown             Freetown
-                         Africa/Monrovia             Monrovia
-                         Africa/Sao_Tome             Sao_Tome
-                         Africa/Timbuktu             Timbuktu
-                         Atlantic/Canary               Canary
-                         Atlantic/Faeroe               Faeroe
-                         Europe/Guernsey             Guernsey
+                          Europe/Belfast                Blfst
+                         Africa/Freetown                Frtwn
+                         Africa/Monrovia                Mnrva
+                         Africa/Sao_Tome                SaoTm
+                         Africa/Timbuktu                Tmbkt
+                         Atlantic/Canary                Cnary
+                         Atlantic/Faeroe                Feroe
+                         Europe/Guernsey                Grnsy
                         Antarctica/Troll                Troll
-                        Atlantic/Madeira              Madeira
-                       Africa/Nouakchott           Nouakchott
-                      Africa/Ouagadougou          Ouagadougou
-                      Atlantic/Reykjavik            Reykjavik
-                      Atlantic/St_Helena            St_Helena
-                      Europe/Isle_of_Man          Isle_of_Man
-                    America/Danmarkshavn         Danmarkshavn
+                        Atlantic/Madeira                Mdira
+                       Africa/Nouakchott                Nkcht
+                      Africa/Ouagadougou                Ouaga
+                      Atlantic/Reykjavik                Reykj
+                      Atlantic/St_Helena                StHel
+                      Europe/Isle_of_Man                ISLMN
+                    America/Danmarkshavn                Danma
                                Etc/GMT-1                GMT-1
                              Europe/Oslo                 Oslo
                              Europe/Rome                 Rome
@@ -240,266 +239,266 @@
                             Europe/Malta                Malta
                             Europe/Paris                Paris
                             Europe/Vaduz                Vaduz
-                           Africa/Bangui               Bangui
-                           Africa/Douala               Douala
-                           Africa/Luanda               Luanda
-                           Africa/Malabo               Malabo
-                           Africa/Niamey               Niamey
-                           Europe/Berlin               Berlin
-                           Europe/Madrid               Madrid
-                           Europe/Monaco               Monaco
-                           Europe/Prague               Prague
-                           Europe/Skopje               Skopje
-                           Europe/Tirane               Tirane
-                           Europe/Vienna               Vienna
-                           Europe/Warsaw               Warsaw
-                           Europe/Zagreb               Zagreb
-                           Europe/Zurich               Zurich
-                          Africa/Algiers              Algiers
-                          Europe/Andorra              Andorra
-                          Europe/Vatican              Vatican
-                         Africa/El_Aaiun             El_Aaiun
-                         Africa/Kinshasa             Kinshasa
-                         Africa/Ndjamena             Ndjamena
-                         Europe/Belgrade             Belgrade
-                         Europe/Brussels             Brussels
-                         Europe/Budapest             Budapest
-                         Europe/Busingen             Busingen
-                         Europe/Sarajevo             Sarajevo
-                        Europe/Amsterdam            Amsterdam
-                        Europe/Gibraltar            Gibraltar
-                        Europe/Ljubljana            Ljubljana
-                        Europe/Podgorica            Podgorica
-                        Europe/Stockholm            Stockholm
-                       Africa/Casablanca           Casablanca
-                       Africa/Libreville           Libreville
-                       Africa/Porto-Novo           Porto-Novo
-                       Europe/Bratislava           Bratislava
-                       Europe/Copenhagen           Copenhagen
-                       Europe/Luxembourg           Luxembourg
-                       Europe/San_Marino           San_Marino
-                      Africa/Brazzaville          Brazzaville
-                      Atlantic/Jan_Mayen            Jan_Mayen
-                     Arctic/Longyearbyen         Longyearbyen
+                           Africa/Bangui                Bngui
+                           Africa/Douala                Duala
+                           Africa/Luanda                Landa
+                           Africa/Malabo                Mlabo
+                           Africa/Niamey                Namey
+                           Europe/Berlin                Brlin
+                           Europe/Madrid                Mdrid
+                           Europe/Monaco                Mnaco
+                           Europe/Prague                Prgue
+                           Europe/Skopje                Skpje
+                           Europe/Tirane                Trane
+                           Europe/Vienna                Viena
+                           Europe/Warsaw                Wrsaw
+                           Europe/Zagreb                Zgreb
+                           Europe/Zurich                Zrich
+                          Africa/Algiers                Algie
+                          Europe/Andorra                Andor
+                          Europe/Vatican                Vatic
+                         Africa/El_Aaiun                ElAai
+                         Africa/Kinshasa                Knsha
+                         Africa/Ndjamena                Ndjam
+                         Europe/Belgrade                Blgrd
+                         Europe/Brussels                Brsls
+                         Europe/Budapest                Budap
+                         Europe/Busingen                Busin
+                         Europe/Sarajevo                Saraj
+                        Europe/Amsterdam                Amstm
+                        Europe/Gibraltar                Gbrtr
+                        Europe/Ljubljana                Ljubl
+                        Europe/Podgorica                Podgo
+                        Europe/Stockholm                Stckm
+                       Africa/Casablanca                Cblca
+                       Africa/Libreville                Lbvle
+                       Africa/Porto-Novo                 Novo
+                       Europe/Bratislava                Brati
+                       Europe/Copenhagen                Copen
+                       Europe/Luxembourg                Luxem
+                       Europe/San_Marino                Marno
+                      Africa/Brazzaville                Brzza
+                      Atlantic/Jan_Mayen                JanMa
+                     Arctic/Longyearbyen                Longy
                                Asia/Gaza                 Gaza
                                Etc/GMT-2                GMT-2
                               Asia/Amman                Amman
-                             Asia/Beirut               Beirut
-                             Asia/Hebron               Hebron
+                             Asia/Beirut                Beirt
+                             Asia/Hebron                Hbron
                              Europe/Kiev                 Kiev
                              Europe/Riga                 Riga
                             Africa/Cairo                Cairo
-                            Asia/Nicosia              Nicosia
+                            Asia/Nicosia                Ncsia
                             Europe/Sofia                Sofia
-                           Africa/Harare               Harare
-                           Africa/Kigali               Kigali
-                           Africa/Lusaka               Lusaka
-                           Africa/Maputo               Maputo
-                           Africa/Maseru               Maseru
-                           Asia/Damascus             Damascus
-                           Asia/Tel_Aviv             Tel_Aviv
-                           Europe/Athens               Athens
-                          Africa/Mbabane              Mbabane
-                          Africa/Tripoli              Tripoli
-                          Asia/Famagusta            Famagusta
-                          Asia/Jerusalem            Jerusalem
-                          Europe/Tallinn              Tallinn
-                          Europe/Vilnius              Vilnius
-                         Africa/Blantyre             Blantyre
-                         Africa/Gaborone             Gaborone
-                         Africa/Khartoum             Khartoum
-                         Africa/Windhoek             Windhoek
-                         Europe/Chisinau             Chisinau
-                         Europe/Helsinki             Helsinki
-                         Europe/Tiraspol             Tiraspol
-                         Europe/Uzhgorod             Uzhgorod
-                        Africa/Bujumbura            Bujumbura
-                        Europe/Bucharest            Bucharest
-                        Europe/Mariehamn            Mariehamn
-                       Africa/Lubumbashi           Lubumbashi
-                       Europe/Zaporozhye           Zaporozhye
-                      Europe/Kaliningrad          Kaliningrad
-                     Africa/Johannesburg         Johannesburg
+                           Africa/Harare                Hrare
+                           Africa/Kigali                Kgali
+                           Africa/Lusaka                Lsaka
+                           Africa/Maputo                Mputo
+                           Africa/Maseru                Mseru
+                           Asia/Damascus                Dmcus
+                           Asia/Tel_Aviv                TelAv
+                           Europe/Athens                Athns
+                          Africa/Mbabane                Mbane
+                          Africa/Tripoli                Trpli
+                          Asia/Famagusta                Fmagu
+                          Asia/Jerusalem                Jerus
+                          Europe/Tallinn                Talin
+                          Europe/Vilnius                Vlnus
+                         Africa/Blantyre                Blant
+                         Africa/Gaborone                Gabor
+                         Africa/Khartoum                Khrtm
+                         Africa/Windhoek                Wndhk
+                         Europe/Chisinau                Csnau
+                         Europe/Helsinki                Helsi
+                         Europe/Tiraspol                Tiras
+                         Europe/Uzhgorod                Uzhgo
+                        Africa/Bujumbura                Bujum
+                        Europe/Bucharest                Bucha
+                        Europe/Mariehamn                Marie
+                       Africa/Lubumbashi                Lubum
+                       Europe/Zaporozhye                Zapor
+                      Europe/Kaliningrad                Kalin
+                     Africa/Johannesburg                Johan
                                Asia/Aden                 Aden
                                Etc/GMT-3                GMT-3
                               Asia/Qatar                Qatar
                              Africa/Juba                 Juba
-                             Asia/Kuwait               Kuwait
-                             Asia/Riyadh               Riyadh
-                            Asia/Baghdad              Baghdad
-                            Asia/Bahrain              Bahrain
+                             Asia/Kuwait                Kwait
+                             Asia/Riyadh                Ryadh
+                            Asia/Baghdad                Bgdad
+                            Asia/Bahrain                Brain
                             Europe/Kirov                Kirov
                             Europe/Minsk                Minsk
-                           Africa/Asmara               Asmara
-                           Asia/Istanbul             Istanbul
-                           Europe/Moscow               Moscow
-                           Indian/Comoro               Comoro
-                          Africa/Kampala              Kampala
-                          Africa/Nairobi              Nairobi
-                          Indian/Mayotte              Mayotte
-                         Africa/Djibouti             Djibouti
-                         Europe/Istanbul             Istanbul
-                        Africa/Mogadishu            Mogadishu
+                           Africa/Asmara                Asmra
+                           Asia/Istanbul                Istan
+                           Europe/Moscow                Mscow
+                           Indian/Comoro                Cmoro
+                          Africa/Kampala                Kmpla
+                          Africa/Nairobi                Nairo
+                          Indian/Mayotte                Myote
+                         Africa/Djibouti                Djibo
+                         Europe/Istanbul                Istan
+                        Africa/Mogadishu                Mogad
                         Antarctica/Syowa                Syowa
-                       Europe/Simferopol           Simferopol
-                      Africa/Addis_Ababa          Addis_Ababa
-                     Indian/Antananarivo         Antananarivo
-                    Africa/Dar_es_Salaam        Dar_es_Salaam
-                             Asia/Tehran               Tehran
+                       Europe/Simferopol                Simfe
+                      Africa/Addis_Ababa                Ababa
+                     Indian/Antananarivo                Antan
+                    Africa/Dar_es_Salaam                Salam
+                             Asia/Tehran                Thran
                                Asia/Baku                 Baku
                                Etc/GMT-4                GMT-4
                               Asia/Dubai                Dubai
-                             Asia/Muscat               Muscat
+                             Asia/Muscat                Mscat
                              Indian/Mahe                 Mahe
-                            Asia/Tbilisi              Tbilisi
-                            Asia/Yerevan              Yerevan
-                           Europe/Samara               Samara
-                          Europe/Saratov              Saratov
-                          Indian/Reunion              Reunion
-                        Europe/Astrakhan            Astrakhan
-                        Europe/Ulyanovsk            Ulyanovsk
-                        Europe/Volgograd            Volgograd
-                        Indian/Mauritius            Mauritius
+                            Asia/Tbilisi                Tblsi
+                            Asia/Yerevan                Yreva
+                           Europe/Samara                Samar
+                          Europe/Saratov                Sarat
+                          Indian/Reunion                Reuni
+                        Europe/Astrakhan                Astra
+                        Europe/Ulyanovsk                Ulyan
+                        Europe/Volgograd                Volgo
+                        Indian/Mauritius                Mauri
                               Asia/Kabul                Kabul
                                Asia/Oral                 Oral
                                Etc/GMT-5                GMT-5
                               Asia/Aqtau                Aqtau
-                             Asia/Aqtobe               Aqtobe
-                             Asia/Atyrau               Atyrau
-                            Asia/Karachi              Karachi
-                           Asia/Ashgabat             Ashgabat
-                           Asia/Dushanbe             Dushanbe
-                           Asia/Tashkent             Tashkent
-                          Asia/Ashkhabad            Ashkhabad
-                          Asia/Qyzylorda            Qyzylorda
-                          Asia/Samarkand            Samarkand
-                         Indian/Maldives             Maldives
-                        Indian/Kerguelen            Kerguelen
-                       Antarctica/Mawson               Mawson
-                      Asia/Yekaterinburg        Yekaterinburg
-                            Asia/Colombo              Colombo
-                            Asia/Kolkata              Kolkata
-                           Asia/Calcutta             Calcutta
-                           Asia/Katmandu             Katmandu
-                          Asia/Kathmandu            Kathmandu
+                             Asia/Aqtobe                Aqtob
+                             Asia/Atyrau                Atyra
+                            Asia/Karachi                Krchi
+                           Asia/Ashgabat                Ashga
+                           Asia/Dushanbe                Dusha
+                           Asia/Tashkent                Tashk
+                          Asia/Ashkhabad                Ashkh
+                          Asia/Qyzylorda                Qyzyl
+                          Asia/Samarkand                Samar
+                         Indian/Maldives                Maldi
+                        Indian/Kerguelen                Kergu
+                       Antarctica/Mawson                Mwson
+                      Asia/Yekaterinburg                Yekat
+                            Asia/Colombo                Colom
+                           Asia/Calcutta                Calcu
+                            Asia/Kolkata                Mumbi
+                           Asia/Katmandu                Katma
+                          Asia/Kathmandu                Kathm
                                Asia/Omsk                 Omsk
                                Etc/GMT-6                GMT-6
                               Asia/Dacca                Dacca
                               Asia/Dhaka                Dhaka
-                             Asia/Almaty               Almaty
-                             Asia/Thimbu               Thimbu
-                             Asia/Urumqi               Urumqi
-                            Asia/Bishkek              Bishkek
-                            Asia/Kashgar              Kashgar
-                            Asia/Thimphu              Thimphu
-                           Indian/Chagos               Chagos
-                       Antarctica/Vostok               Vostok
-                             Asia/Yangon               Yangon
-                            Asia/Rangoon              Rangoon
+                             Asia/Almaty                Almat
+                             Asia/Thimbu                Thimb
+                             Asia/Urumqi                Urumq
+                            Asia/Bishkek                Bishk
+                            Asia/Kashgar                Kashg
+                            Asia/Thimphu                Thimp
+                           Indian/Chagos                Chago
+                       Antarctica/Vostok                Vstok
+                             Asia/Yangon                Yngon
+                            Asia/Rangoon                Rngon
                             Indian/Cocos                Cocos
                                Asia/Hovd                 Hovd
                                Etc/GMT-7                GMT-7
                               Asia/Tomsk                Tomsk
-                             Asia/Saigon               Saigon
-                            Asia/Bangkok              Bangkok
-                            Asia/Barnaul              Barnaul
-                            Asia/Jakarta              Jakarta
-                          Asia/Pontianak            Pontianak
-                          Asia/Vientiane            Vientiane
-                         Asia/Phnom_Penh           Phnom_Penh
+                             Asia/Saigon                Saign
+                            Asia/Bangkok                Bgkok
+                            Asia/Barnaul                Brnul
+                            Asia/Jakarta                Jkrta
+                          Asia/Pontianak                Ponti
+                          Asia/Vientiane                Vient
+                         Asia/Phnom_Penh                Phnom
                         Antarctica/Davis                Davis
-                        Asia/Ho_Chi_Minh          Ho_Chi_Minh
-                        Asia/Krasnoyarsk          Krasnoyarsk
-                        Asia/Novosibirsk          Novosibirsk
-                        Indian/Christmas            Christmas
-                       Asia/Novokuznetsk         Novokuznetsk
+                        Asia/Ho_Chi_Minh                HoChi
+                        Asia/Krasnoyarsk                Krasn
+                        Asia/Novosibirsk                Novos
+                        Indian/Christmas                Christ
+                       Asia/Novokuznetsk                Novok
                                Etc/GMT-8                GMT-8
                               Asia/Macao                Macao
                               Asia/Macau                Macau
-                             Asia/Brunei               Brunei
-                             Asia/Harbin               Harbin
-                             Asia/Manila               Manila
-                             Asia/Taipei               Taipei
-                            Asia/Irkutsk              Irkutsk
-                            Asia/Kuching              Kuching
-                           Asia/Makassar             Makassar
-                           Asia/Shanghai             Shanghai
-                          Asia/Chongqing            Chongqing
-                          Asia/Chungking            Chungking
-                          Asia/Hong_Kong            Hong_Kong
-                          Asia/Singapore            Singapore
-                         Asia/Choibalsan           Choibalsan
-                         Asia/Ulan_Bator           Ulan_Bator
+                             Asia/Brunei                Brune
+                             Asia/Harbin                Hrbin
+                             Asia/Manila                Mnila
+                             Asia/Taipei                Taipe
+                            Asia/Irkutsk                Irkut
+                            Asia/Kuching                Kuchi
+                           Asia/Makassar                Makas
+                           Asia/Shanghai                Shang
+                          Asia/Chongqing                Chong
+                          Asia/Chungking                Chung
+                          Asia/Hong_Kong                HongK
+                          Asia/Singapore                Singa
+                         Asia/Choibalsan                Choib
+                         Asia/Ulan_Bator                UlanB
                          Australia/Perth                Perth
                         Antarctica/Casey                Casey
-                        Asia/Ulaanbaatar          Ulaanbaatar
-                       Asia/Kuala_Lumpur         Kuala_Lumpur
-                      Asia/Ujung_Pandang        Ujung_Pandang
+                        Asia/Ulaanbaatar                Ulaan
+                       Asia/Kuala_Lumpur                Kuala
+                      Asia/Ujung_Pandang                Ujung
                          Australia/Eucla                Eucla
                                Asia/Dili                 Dili
                                Etc/GMT-9                GMT-9
                               Asia/Chita                Chita
                               Asia/Seoul                Seoul
                               Asia/Tokyo                Tokyo
-                            Asia/Yakutsk              Yakutsk
-                           Asia/Jayapura             Jayapura
-                           Asia/Khandyga             Khandyga
+                            Asia/Yakutsk                Yakut
+                           Asia/Jayapura                Jayap
+                           Asia/Khandyga                Khand
                            Pacific/Palau                Palau
-                          Asia/Pyongyang            Pyongyang
-                        Australia/Darwin               Darwin
+                          Asia/Pyongyang                Pyong
+                        Australia/Darwin                Drwin
                               Etc/GMT-10               GMT-10
                              Pacific/Yap                  Yap
                             Pacific/Guam                 Guam
                             Pacific/Truk                 Truk
-                           Asia/Ust-Nera             Ust-Nera
+                           Asia/Ust-Nera                UstNe
                            Pacific/Chuuk                Chuuk
-                          Pacific/Saipan               Saipan
-                        Asia/Vladivostok          Vladivostok
-                      Australia/Brisbane             Brisbane
-                      Australia/Lindeman             Lindeman
-                    Pacific/Port_Moresby         Port_Moresby
-               Antarctica/DumontDUrville       DumontDUrville
-                      Australia/Adelaide             Adelaide
-                    Australia/Yancowinna           Yancowinna
-                   Australia/Broken_Hill          Broken_Hill
-                              Etc/GMT-11               GMT-11
-                            Asia/Magadan              Magadan
-                           Asia/Sakhalin             Sakhalin
+                          Pacific/Saipan                Sipan
+                        Asia/Vladivostok                Vladi
+                      Australia/Brisbane                Brisb
+                      Australia/Lindeman                Linde
+                    Pacific/Port_Moresby                PtMor
+               Antarctica/DumontDUrville                Dumon
+                      Australia/Adelaide                Adela
+                    Australia/Yancowinna                Yanco
+                   Australia/Broken_Hill                BrHil
+                              Etc/GMT-11                GMT-11
+                            Asia/Magadan                Magda
+                           Asia/Sakhalin                Sakhal
                            Pacific/Efate                Efate
-                          Pacific/Kosrae               Kosrae
-                          Pacific/Noumea               Noumea
-                          Pacific/Ponape               Ponape
-                         Pacific/Pohnpei              Pohnpei
-                        Australia/Currie               Currie
-                        Australia/Hobart               Hobart
-                        Australia/Sydney               Sydney
-                      Asia/Srednekolymsk        Srednekolymsk
-                      Australia/Canberra             Canberra
-                     Australia/Lord_Howe            Lord_Howe
-                     Australia/Melbourne            Melbourne
-                     Pacific/Guadalcanal          Guadalcanal
-                    Antarctica/Macquarie            Macquarie
-                    Pacific/Bougainville         Bougainville
+                          Pacific/Kosrae                Kosra
+                          Pacific/Noumea                Noume
+                          Pacific/Ponape                Ponap
+                         Pacific/Pohnpei                Pohnp
+                        Australia/Currie                Curie
+                        Australia/Hobart                Hobrt
+                        Australia/Sydney                Sydny
+                      Asia/Srednekolymsk                Sredn
+                      Australia/Canberra                Canbe
+                     Australia/Lord_Howe                LordH
+                     Australia/Melbourne                Melbo
+                     Pacific/Guadalcanal                Guada
+                    Antarctica/Macquarie                Macqu
+                    Pacific/Bougainville                Bouga
                               Etc/GMT-12               GMT-12
-                             Asia/Anadyr               Anadyr
+                             Asia/Anadyr                Anady
                             Pacific/Fiji                 Fiji
                             Pacific/Wake                 Wake
                            Pacific/Nauru                Nauru
-                          Asia/Kamchatka            Kamchatka
-                          Pacific/Majuro               Majuro
-                          Pacific/Tarawa               Tarawa
-                          Pacific/Wallis               Wallis
-                         Pacific/Norfolk              Norfolk
-                        Pacific/Funafuti             Funafuti
-                       Pacific/Kwajalein            Kwajalein
+                          Asia/Kamchatka                Kamch
+                          Pacific/Majuro                Majur
+                          Pacific/Tarawa                Taraw
+                          Pacific/Wallis                Walis
+                         Pacific/Norfolk                Norfo
+                        Pacific/Funafuti                Funaf
+                       Pacific/Kwajalein                Kwaja
                               Etc/GMT-13               GMT-13
-                         Pacific/Fakaofo              Fakaofo
-                        Pacific/Auckland             Auckland
-                       Pacific/Enderbury            Enderbury
-                       Pacific/Tongatapu            Tongatapu
-                      Antarctica/McMurdo              McMurdo
-                   Antarctica/South_Pole           South_Pole
-                         Pacific/Chatham              Chatham
+                         Pacific/Fakaofo                Fakao
+                        Pacific/Auckland                Auckl
+                       Pacific/Enderbury                Ender
+                       Pacific/Tongatapu                Tonga
+                      Antarctica/McMurdo                McMur
+                   Antarctica/South_Pole                SPole
+                         Pacific/Chatham                Chath
                               Etc/GMT-14               GMT-14
                             Pacific/Apia                 Apia
-                      Pacific/Kiritimati           Kiritimati
+                      Pacific/Kiritimati                Kirit
