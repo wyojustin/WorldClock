@@ -224,7 +224,7 @@ class WorldClock(Sprite):
         self.create_sprites()
 
         lines = open('timezones.txt').readlines()
-        self.all_zones = [line.split()[0].strip() for line in lines[1:] if len(line.split()) > 1]
+        self.all_zones = [line.split() for line in lines[1:]]
         
     def create_sprites(self):
         self.codes = []
@@ -259,7 +259,7 @@ class WorldClock(Sprite):
     def get_current_idx(self):
         current = self.timezones[1][0]
         current_idx = None
-        for i, tz in enumerate(self.all_zones):
+        for i, (tz, code) in enumerate(self.all_zones):
             if tz == current:
                 current_idx = i
                 break
@@ -271,8 +271,8 @@ class WorldClock(Sprite):
         current_idx = self.get_current_idx()
         if current_idx:
             next = (current_idx + 1) % len(self.all_zones)
-            tz = self.all_zones[next]
-            self.timezones[1] = [tz, tz.split('/')[1]]
+            tz, code = self.all_zones[next]
+            self.timezones[1] = [tz, code]
             self.create_sprites()
         
     def decrement(self):
@@ -281,8 +281,8 @@ class WorldClock(Sprite):
         current_idx = self.get_current_idx()
         if current_idx:
             prev = (current_idx -1) % len(self.all_zones)
-            tz = self.all_zones[prev]
-            self.timezones[1] = [tz, tz.split('/')[1]]
+            tz, code = self.all_zones[prev]
+            self.timezones[1] = [tz, code]
             self.create_sprites()
             
     def send_command(self, command):

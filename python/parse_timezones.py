@@ -17,6 +17,7 @@ for line in lines[1:]:
         all.append((offset, s))
 all.sort()
 for row in all:
-    row = row[1].split()
-    print(row)
-    print(row[1], row[1].split('/')[1])
+    tz = row[1].split()[0]
+    if '/' not in tz:
+        tz = '%s/%s' % (tz, tz)
+    print('%40s %20s' % (tz, tz.split('/')[1]))
