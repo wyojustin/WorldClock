@@ -222,6 +222,9 @@ class WorldClock(Sprite):
         self.timezones = timezones
         self.color_offset = 0
         self.create_sprites()
+
+        lines = open('timezones.txt').readlines()
+        self.all_zones = [line.split()[0].strip() for line in lines[1:] if len(line.split()) > 1]
         
     def create_sprites(self):
         self.codes = []
@@ -253,12 +256,45 @@ class WorldClock(Sprite):
         self.color_offset += 1
         self.create_sprites()
 
+    def get_current_idx(self):
+        current = self.timezones[1][0]
+        current_idx = None
+        for i, tz in enumerate(self.all_zones):
+            if tz == current:
+                current_idx = i
+                break
+        return current_idx
+    
+    def increment(self):
+        # find current timezone
+        # grab next timezone
+        current_idx = self.get_current_idx()
+        if current_idx:
+            next = (current_idx + 1) % len(self.all_zones)
+            tz = self.all_zones[next]
+            self.timezones[1] = [tz, tz.split('/')[1]]
+            self.create_sprites()
+        
+    def decrement(self):
+        # find current timezone
+        # grab previous timezone
+        current_idx = self.get_current_idx()
+        if current_idx:
+            prev = (current_idx -1) % len(self.all_zones)
+            tz = self.all_zones[prev]
+            self.timezones[1] = [tz, tz.split('/')[1]]
+            self.create_sprites()
+            
     def send_command(self, command):
         for c in command:
             if c == 'R':
                 self.scroll_up()
             if c == 'L':
                 self.scroll_down()
+            if c == 'I':
+                self.increment()
+            if c == 'K':
+                self.decrement()
 mode_idx = 0
 tom_thumb = graphics.Font()
 tom_thumb.LoadFont(os.path.join(font_dir, "tom-thumb.bdf"))
@@ -295,6 +331,8 @@ class RunClock(MatrixBase):
         nav.bindkey('<Central release>', lambda: self.add_cmd('C'))
         nav.bindkey('<Left release>', lambda: self.add_cmd('L'))
         nav.bindkey('<Right release>', lambda: self.add_cmd('R'))
+        nav.bindkey('<Rotary increment>', lambda: self.add_cmd('I'))
+        nav.bindkey('<Rotary decrement>', lambda: self.add_cmd('K'))
 
     def add_cmd(self, cmd):
         self.command_buffer.append(cmd)
@@ -322,8 +360,9 @@ class RunClock(MatrixBase):
                      ['Asia/Kolkata', 'MUMBI'],
         ]
         #test_text = Text(21, 13, "AM", BLUE, tom_thumb)
-        all_zones = [('Local', 'LOCAL')]
-        all_colors = [PURPLE]
+        
+        zones = [('Local', 'LOCAL')]
+        colors = [PURPLE]
         tz_txt = 'zonemap.txt'
         lines = open(tz_txt).readlines()
         for i, line in enumerate(lines[1:]):
@@ -332,12 +371,12 @@ class RunClock(MatrixBase):
                 code = line[0]
                 city = line[1]
                 color = [GREEN, BLUE][i % 2]
-                all_zones.insert(1, (code, city))
-                all_colors.insert(1, color)
+                zones.insert(1, (code, city))
+                colors.insert(1, color)
         world_clocks = [
             WorldClock(0, 0, [BLUE, GREEN], timezones),
             WorldClock(0, 0, [BLUE, GREEN, RED], wyozones),
-            WorldClock(0, 0, all_colors, all_zones)
+            WorldClock(0, 0, colors, zones)
             ]
         big_clock = BigClock(0, 0, GREEN, ['America/New_York', ' New York'], color2=BLUE)
         big_clocks = [
