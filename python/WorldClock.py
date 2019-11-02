@@ -64,7 +64,7 @@ def littleTime(current_time, start_x, start_y, canvas, color, am_pm=True):
   colen = (ss % 2) == 0
   start_y -= 7 ## reference to baseline (not top)
   if am_pm:
-      am_pm = int(hh > 12)
+      am_pm = int(hh >= 12)
       littleDigit(start_x + 4 * 5,  start_y, 10 + am_pm, canvas, color) ## A or P
       # littleDigit(start_x + 5 * 5 - 1,  start_y, 12, canvas, color) # M
       hh = (hh - 1) % 12 + 1
@@ -90,12 +90,12 @@ def bigTime(current_time, start_x, start_y, canvas, color, am_pm=True, label=Non
   hh, mm, ss = unix2hms(current_time)
   colen = (ss % 2) == 0
   W = 10
-  H = 22
+  H = 20
   if am_pm:
       pass
-      am_pm = int(hh > 12)
-      # littleDigit(start_x + 4 * 5,  start_y, 10 + am_pm, canvas, color) ## A or P
-      # littleDigit(start_x + 5 * 5 - 1,  start_y, 12, canvas, color) # M
+      am_pm = int(hh >= 12)
+      littleDigit(start_x + 4,  start_y + 57, 10 + am_pm, canvas, color) ## A or P
+      littleDigit(start_x + 9,  start_y + 57, 12, canvas, color) # M
       hh = (hh - 1) % 12 + 1
 
   else:
@@ -117,8 +117,8 @@ def bigTime(current_time, start_x, start_y, canvas, color, am_pm=True, label=Non
       setPixel(my_x + 11, my_y + H - 4, canvas, color)
       setPixel(my_x + 12, my_y + H - 3, canvas, color);
   if ss % 2 == 1:
-      colen(start_x, start_y)
-      colen(start_x, start_y + H)
+      colen(start_x, start_y + 1)
+      colen(start_x, start_y + H + 1)
   bigDigit(start_x    ,  start_y + 1 * H, mm/10, canvas, color);
   bigDigit(start_x + W,  start_y + 1 * H, mm%10, canvas, color);
   bigDigit(start_x    ,  start_y + 2 * H, ss/10, canvas, color);
@@ -130,7 +130,6 @@ def bigTime(current_time, start_x, start_y, canvas, color, am_pm=True, label=Non
   if offset_str:
       for i in range(len(offset_str)):
           graphics.DrawText(canvas, font_5x7, start_x + 26, start_y + 7 + 7 * i, color2, offset_str[i].upper())
-      
              
 def littleChar(x, y, char, canvas, color):
   idx = ord(char) - 32;
@@ -421,7 +420,10 @@ class RunClock(MatrixBase):
         def read_command():
             result = select.select([sys.stdin,],[],[],0.0)[0]
             if result:
-                out = sys.stdin.readline().strip()
+                try:
+                    out = sys.stdin.readline().strip()
+                except IOError:
+                    out = ''
             else:
                 out = ''
             nav.react()
