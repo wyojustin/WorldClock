@@ -194,13 +194,9 @@
                          Atlantic/Azores                Azres
                      Atlantic/Cape_Verde                Verde
                     America/Scoresbysund                Scres
-                                 GMT/GMT                  GMT
-                                 UTC/UTC                  UTC
                                  Etc/GMT                  GMT
                                  Etc/UTC                  UTC
-                                Etc/GMT0                 GMT0
-                               Etc/GMT+0                GMT+0
-                               Etc/GMT-0                GMT-0
+                                Etc/GMT0                 ZULU
                              Africa/Lome                 Lome
                             Africa/Accra                Accra
                             Africa/Dakar                Dakar

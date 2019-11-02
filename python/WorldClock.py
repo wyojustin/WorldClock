@@ -15,6 +15,18 @@ from constants import RED, GREEN, BLUE, PURPLE
 
 from I2CNavKey import nav
 
+tz_txt = 'zonemap.txt'
+
+lines = open(tz_txt).readlines()
+select_zones = []
+select_colors = [BLUE, GREEN, RED]
+for i, line in enumerate(lines[1:]):
+    line = line.split()
+    if line:
+        code = line[0]
+        city = line[1]
+        select_zones.insert(0, (code, city))
+
 def setPixel(x, y, canvas, color):
     graphics.DrawLine(canvas, x, y, x, y, color)
     
@@ -201,8 +213,14 @@ class BigClock(Sprite):
         Sprite.__init__(self, x, y)
         self.color = color
         self.color2 = color2
-        self.timezone = timezone
-        self.label = self.timezone[1]
+        self.current_idx = [i for i, l in enumerate(select_zones) if l[0].strip() == timezone[0]][0]
+        self.update()
+        
+    def update(self):
+        self.timezone = select_zones[self.current_idx]
+        # self.label = self.timezone[1]
+        label = self.timezone[0].split('/')[1]
+        self.label = label.replace('_', '')
 
     def draw(self, canvas):
         arrow_tm = arrow.get().to(self.timezone[0])
@@ -213,7 +231,16 @@ class BigClock(Sprite):
         offset_str = "GMT %+02d%02d" % (offset_hh, offset_mm)
         now = tm.tm_hour * 3600 + tm.tm_min * 60 + tm.tm_sec
         bigTime(now, self.x, self.y, canvas, self.color, label=self.label, offset_str=offset_str, color2=self.color2)
-    
+
+    def send_command(self, command):
+        if command.upper() == 'I':
+            self.current_idx = (self.current_idx + 1) % len(select_zones)
+            self.update()
+        if command.upper() == 'K':
+            self.current_idx = (self.current_idx - 1) % len(select_zones)
+            self.update()
+
+        
 class WorldClock(Sprite):
     def __init__(self, x, y, colors, timezones):
         self.x = x
@@ -222,9 +249,9 @@ class WorldClock(Sprite):
         self.timezones = timezones
         self.color_offset = 0
         self.create_sprites()
-
         lines = open('timezones.txt').readlines()
-        self.all_zones = [line.split() for line in lines[1:]]
+        self.all_zones = [line.split()[:2] for line in lines[1:]]
+        self.all_zones_idx = None
         
     def create_sprites(self):
         self.codes = []
@@ -258,32 +285,43 @@ class WorldClock(Sprite):
 
     def get_current_idx(self):
         current = self.timezones[1][0]
+
+        ### check to see if allzones index is correct
         current_idx = None
-        for i, (tz, code) in enumerate(self.all_zones):
-            if tz == current:
-                current_idx = i
-                break
+        if self.all_zones_idx is not None:
+            if current == self.all_zones[self.all_zones_idx]:
+                current_idx = self.all_zones_idx
+
+        ### otherwise look through whole list
+        if current_idx is None:
+            for i, (tz, code) in enumerate(self.all_zones):
+                if tz == current:
+                    current_idx = i
+                    break
+            else:
+                print 'Timezone not found', current
         return current_idx
-    
+    def set_timezone(self, idx):
+        tz, code = self.all_zones[idx]
+        self.timezones[1] = [tz, code]
+        self.create_sprites()
+        self.all_zones_idx = idx
+        
     def increment(self):
         # find current timezone
         # grab next timezone
         current_idx = self.get_current_idx()
-        if current_idx:
+        if current_idx is not None:
             next = (current_idx + 1) % len(self.all_zones)
-            tz, code = self.all_zones[next]
-            self.timezones[1] = [tz, code]
-            self.create_sprites()
+            self.set_timezone(next)
         
     def decrement(self):
         # find current timezone
         # grab previous timezone
         current_idx = self.get_current_idx()
-        if current_idx:
+        if current_idx is not None:
             prev = (current_idx -1) % len(self.all_zones)
-            tz, code = self.all_zones[prev]
-            self.timezones[1] = [tz, code]
-            self.create_sprites()
+            self.set_timezone(prev)
             
     def send_command(self, command):
         for c in command:
@@ -345,8 +383,8 @@ class RunClock(MatrixBase):
         wyozones = [
             ['Local', 'Bostn'],
 #            ['America/New York', 'Bostn'],
-            ['America/Los Angeles', 'Diego'],
-            ['Asia/Shanghai', 'SHNZN'],
+            ['America/Los_Angeles', 'Diego'],
+            ['Asia/Shanghai', 'SHANG'],
             ['Asia/Kolkata', 'MUMBI'],
         ]
         timezones = [['Local', 'LOCAL'],
@@ -355,36 +393,29 @@ class RunClock(MatrixBase):
                      ['America/New_York', 'NY'],
                      ['America/Chicago', 'CHIGO'],
                      ['America/Denver', 'DENVR'],
-                     ['America/Los Angeles', 'LA'],
-                     ['Asia/Shanghai', 'SHNZN'],
+                     ['America/Los_Angeles', 'LA'],
+                     ['Asia/Shanghai', 'SHANG'],
                      ['Asia/Kolkata', 'MUMBI'],
         ]
         #test_text = Text(21, 13, "AM", BLUE, tom_thumb)
         
-        zones = [('Local', 'LOCAL')]
+        zones = [('Local', 'LOCAL')] + select_zones
         colors = [PURPLE]
-        tz_txt = 'zonemap.txt'
-        lines = open(tz_txt).readlines()
-        for i, line in enumerate(lines[1:]):
-            line = line.split()
-            if line:
-                code = line[0]
-                city = line[1]
-                color = [GREEN, BLUE][i % 2]
-                zones.insert(1, (code, city))
-                colors.insert(1, color)
+        for i in range(len(zones) - 1):
+            colors.insert(1, select_colors[i % (len(select_colors))])
+
         world_clocks = [
             WorldClock(0, 0, [BLUE, GREEN], timezones),
             WorldClock(0, 0, [BLUE, GREEN, RED], wyozones),
             WorldClock(0, 0, colors, zones)
             ]
-        big_clock = BigClock(0, 0, GREEN, ['America/New_York', ' New York'], color2=BLUE)
         big_clocks = [
-            BigClock(0, 0, GREEN, ['GMT', 'Zulu'], color2=BLUE),
-            BigClock(0, 0, BLUE, ['Europe/London', 'London'], color2=GREEN),
-            BigClock(0, 0, GREEN, ['America/New_York', 'New York'], color2=BLUE),
-            BigClock(0, 0, BLUE, ['America/Denver', 'Denver'], color2=GREEN),
-            BigClock(0, 0, GREEN, ['America/Los Angeles', 'Los Angeles'], color2=BLUE)]
+            BigClock(0, 0, GREEN, ['Etc/GMT', 'Zulu'], color2=BLUE),
+            #BigClock(0, 0, BLUE, ['Europe/London', 'London'], color2=GREEN),
+            #BigClock(0, 0, GREEN, ['America/New_York', 'New York'], color2=BLUE),
+            #BigClock(0, 0, BLUE, ['America/Denver', 'Denver'], color2=GREEN),
+            #BigClock(0, 0, GREEN, ['America/Los Angeles', 'Los Angeles'], color2=BLUE)
+        ]
 
         modes =  world_clocks + big_clocks
         def read_command():
@@ -400,10 +431,10 @@ class RunClock(MatrixBase):
             return out
         def next_display():
             global mode_idx
-            mode_idx = (mode_idx+1) % (len(modes))
+            mode_idx = (mode_idx + 1) % (len(modes))
         def prev_display():
             global mode_idx
-            mode_idx = (mode_idx + len(modes) - 1) % (len(modes))
+            mode_idx = (mode_idx - 1) % (len(modes))
         while not quit[0]:
             offscreen_canvas.Clear()
             modes[mode_idx].draw(offscreen_canvas)
